@@ -16,3 +16,11 @@ body {
   position: absolute;
   z-index: 100;
 }
+.dropzone {
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  background-color: blue;
+  width: 40%;
+  height: 25%;
+}
