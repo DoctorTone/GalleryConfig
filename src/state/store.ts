@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 interface FileState {
   file: File | null;
-  setFile: (file: File) => void;
+  setFile: (file: File | null) => void;
 }
 
 const useStore = create<FileState>((set) => ({

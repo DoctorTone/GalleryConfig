@@ -3,13 +3,16 @@ import useStore from "../state/store";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { GLTF } from "three-stdlib";
+import { useThree } from "@react-three/fiber";
 
 const Art = () => {
   const [gltf, setGltf] = useState<GLTF>();
+  const { scene } = useThree();
   const file = useStore((state) => state.file);
+  const setFile = useStore((state) => state.setFile);
 
   useEffect(() => {
-    if (file && !gltf) {
+    if (file !== null) {
       let url = URL.createObjectURL(file);
       const gltfLoader = new GLTFLoader();
       const dracoLoader = new DRACOLoader();
@@ -20,7 +23,8 @@ const Art = () => {
         try {
           const model = await gltfLoader.loadAsync(url);
           //@ts-ignore
-          setGltf(model);
+          scene.add(model.scene);
+          setFile(null);
         } catch (error) {
           console.log("Error = ", error);
         }
