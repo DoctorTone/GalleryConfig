@@ -14,7 +14,9 @@ const DragDrop = () => {
   return (
     <div id="drop" {...getRootProps({ className: "dropzone" })}>
       <input {...getInputProps()} />
-      <Typography variant="h5">Drag and drop file here...</Typography>
+      <Typography variant="h5">
+        Drag and drop files here until you are finished...
+      </Typography>
     </div>
   );
 };

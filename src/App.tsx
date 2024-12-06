@@ -8,9 +8,9 @@ import Controls from "./UI/Controls";
 function App() {
   return (
     <>
-      <Canvas camera={{ position: SCENE.cameraPosition }}>
+      <Canvas camera={{ position: SCENE.cameraPosition, fov: 60 }}>
         <Art />
-        <OrbitControls makeDefault enablePan={false} enableRotate={true} />
+        <OrbitControls makeDefault />
       </Canvas>
       <DragDrop />
       <Controls />
