@@ -2,11 +2,12 @@ import { useDropzone } from "react-dropzone";
 import Typography from "@mui/material/Typography";
 import useStore from "../state/store";
 import Button from "@mui/material/Button";
-import { div } from "three/webgpu";
 
 const DragDrop = () => {
   const setFile = useStore((state) => state.setFile);
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
+  const dropVisible = useStore((state) => state.dropVisible);
+  const setDragDrop = useStore((state) => state.setDragDrop);
 
   const files = acceptedFiles.map((file) => {
     console.log("File = ", file);
@@ -14,7 +15,7 @@ const DragDrop = () => {
   });
 
   return (
-    <div id="drop">
+    <div id="drop" className={dropVisible ? "d-block" : "d-none"}>
       <div {...getRootProps({ className: "dropzone" })}>
         <input {...getInputProps()} />
         <Typography variant="h5" sx={{ mb: 10 }}>
@@ -24,7 +25,9 @@ const DragDrop = () => {
       <div>
         <p></p>
       </div>
-      <Button variant="contained">Done</Button>
+      <Button variant="contained" onClick={() => setDragDrop(false)}>
+        Done
+      </Button>
     </div>
   );
 };
