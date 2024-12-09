@@ -9,6 +9,11 @@ const DragDrop = () => {
   const dropVisible = useStore((state) => state.dropVisible);
   const setDragDrop = useStore((state) => state.setDragDrop);
 
+  const clearFiles = () => {
+    setDragDrop(false);
+    acceptedFiles.length = 0;
+  };
+
   const files = acceptedFiles.map((file) => {
     console.log("File = ", file);
     setFile(file);
@@ -25,7 +30,7 @@ const DragDrop = () => {
       <div>
         <p></p>
       </div>
-      <Button variant="contained" onClick={() => setDragDrop(false)}>
+      <Button variant="contained" onClick={clearFiles}>
         Done
       </Button>
     </div>

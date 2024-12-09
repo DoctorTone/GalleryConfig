@@ -7,6 +7,8 @@ interface FileState {
   setIntensity: (value: number) => void;
   dropVisible: boolean;
   setDragDrop: (status: boolean) => void;
+  checkState: boolean;
+  setCheckState: (status: boolean) => void;
 }
 
 const useStore = create<FileState>((set) => ({
@@ -16,6 +18,8 @@ const useStore = create<FileState>((set) => ({
   setIntensity: (value) => set(() => ({ intensity: value })),
   dropVisible: true,
   setDragDrop: (status) => set(() => ({ dropVisible: status })),
+  checkState: false,
+  setCheckState: (status) => set(() => ({ checkState: status })),
 }));
 
 export default useStore;

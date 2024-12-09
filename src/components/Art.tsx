@@ -34,11 +34,7 @@ const Art = () => {
     }
   }, [file]);
 
-  return (
-    <Suspense fallback={null}>
-      {gltf && <primitive object={gltf.scene} />}
-    </Suspense>
-  );
+  return null;
 };
 
 export default Art;
