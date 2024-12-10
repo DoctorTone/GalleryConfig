@@ -4,6 +4,7 @@ import useStore from "../state/store";
 
 const ObjectSelection = () => {
   const setCheckState = useStore((state) => state.setCheckState);
+  const setSelectedObject = useStore((state) => state.setSelectedObject);
   const checkState = useStore((state) => state.checkState);
   const { raycaster, scene } = useThree();
 
@@ -12,6 +13,10 @@ const ObjectSelection = () => {
 
     const intersects = raycaster.intersectObjects(scene.children);
     console.log("Objects = ", intersects);
+    if (intersects.length) {
+      setSelectedObject(intersects[0].object.parent!);
+    }
+
     setCheckState(false);
   }, [checkState]);
 

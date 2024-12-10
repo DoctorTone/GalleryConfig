@@ -4,9 +4,10 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { GLTF } from "three-stdlib";
 import { useThree } from "@react-three/fiber";
+import { Group } from "three";
 
 const Art = () => {
-  const [gltf, setGltf] = useState<GLTF>();
+  console.log("Art model");
   const { scene } = useThree();
   const file = useStore((state) => state.file);
   const setFile = useStore((state) => state.setFile);
@@ -26,7 +27,7 @@ const Art = () => {
           scene.add(model.scene);
           setFile(null);
         } catch (error) {
-          console.log("Error = ", error);
+          return null;
         }
       };
 

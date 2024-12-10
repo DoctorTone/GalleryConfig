@@ -1,3 +1,4 @@
+import { Object3D } from "three";
 import { create } from "zustand";
 
 interface FileState {
@@ -9,6 +10,8 @@ interface FileState {
   setDragDrop: (status: boolean) => void;
   checkState: boolean;
   setCheckState: (status: boolean) => void;
+  selectedObject: Object3D | null;
+  setSelectedObject: (object: Object3D) => void;
 }
 
 const useStore = create<FileState>((set) => ({
@@ -20,6 +23,8 @@ const useStore = create<FileState>((set) => ({
   setDragDrop: (status) => set(() => ({ dropVisible: status })),
   checkState: false,
   setCheckState: (status) => set(() => ({ checkState: status })),
+  selectedObject: null,
+  setSelectedObject: (object) => set(() => ({ selectedObject: object })),
 }));
 
 export default useStore;

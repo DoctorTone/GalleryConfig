@@ -1,15 +1,15 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, TransformControls } from "@react-three/drei";
 import Art from "./components/Art";
 import { SCENE } from "./state/Config";
 import DragDrop from "./components/DragDrop";
 import Controls from "./UI/Controls";
 import useStore from "./state/store";
 import ObjectSelection from "./components/ObjectSelection";
-import { useState } from "react";
 
 function App() {
   const setCheckState = useStore((state) => state.setCheckState);
+  const selectedObject = useStore((state) => state.selectedObject);
 
   return (
     <>
@@ -23,6 +23,9 @@ function App() {
         <Art />
         <OrbitControls makeDefault />
         <ObjectSelection />
+        {selectedObject !== null && (
+          <TransformControls object={selectedObject} />
+        )}
       </Canvas>
       <DragDrop />
       <Controls />
