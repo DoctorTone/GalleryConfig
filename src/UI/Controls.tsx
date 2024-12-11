@@ -6,7 +6,6 @@ const Controls = () => {
   const setIntensity = useStore((state) => state.setIntensity);
   const dropVisible = useStore((state) => state.dropVisible);
   const setDragDrop = useStore((state) => state.setDragDrop);
-  const selectedObject = useStore((state) => state.selectedObject);
   const getSelectedObject = useStore((state) => state.getSelectedObject);
 
   const toggleDragDrop = () => {

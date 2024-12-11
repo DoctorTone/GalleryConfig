@@ -4,6 +4,7 @@ import Art from "./components/Art";
 import { SCENE, TRANSFORM_NODES } from "./state/Config";
 import DragDrop from "./components/DragDrop";
 import Controls from "./UI/Controls";
+import Lights from "./components/Lights";
 import useStore from "./state/store";
 import ObjectSelection from "./components/ObjectSelection";
 
@@ -19,14 +20,12 @@ function App() {
       <Canvas
         camera={{ position: SCENE.cameraPosition, fov: 60 }}
         onClick={(event) => {
-          console.log("Clicked canvas");
           event.stopPropagation();
           if (selectedObject === null) {
             setCheckState(true);
           }
         }}
         onContextMenu={(event) => {
-          console.log("Right clicked");
           if (selectedObject !== null) {
             setTransformMode((currentMode + 1) % 3);
           }
@@ -37,6 +36,7 @@ function App() {
           }
         }}
       >
+        <Lights />
         <Art />
         <OrbitControls makeDefault />
         <ObjectSelection />
