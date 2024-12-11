@@ -12,7 +12,6 @@ const ObjectSelection = () => {
     if (!checkState) return;
 
     const intersects = raycaster.intersectObjects(scene.children);
-    console.log("Objects = ", intersects);
     if (intersects.length) {
       setSelectedObject(intersects[0].object.parent!);
     }

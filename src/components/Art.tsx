@@ -7,7 +7,6 @@ import { useThree } from "@react-three/fiber";
 import { Group } from "three";
 
 const Art = () => {
-  console.log("Art model");
   const { scene } = useThree();
   const file = useStore((state) => state.file);
   const setFile = useStore((state) => state.setFile);

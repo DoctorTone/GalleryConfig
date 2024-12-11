@@ -10,4 +10,6 @@ const SCENE = {
   MAX_DISTANCE: 2,
 };
 
-export { SCENE };
+const TRANSFORM_NODES = ["translate", "rotate", "scale"];
+
+export { SCENE, TRANSFORM_NODES };

@@ -11,7 +11,9 @@ interface FileState {
   checkState: boolean;
   setCheckState: (status: boolean) => void;
   selectedObject: Object3D | null;
-  setSelectedObject: (object: Object3D) => void;
+  setSelectedObject: (object: Object3D | null) => void;
+  currentMode: number;
+  setTransformMode: (mode: number) => void;
 }
 
 const useStore = create<FileState>((set) => ({
@@ -25,6 +27,8 @@ const useStore = create<FileState>((set) => ({
   setCheckState: (status) => set(() => ({ checkState: status })),
   selectedObject: null,
   setSelectedObject: (object) => set(() => ({ selectedObject: object })),
+  currentMode: 0,
+  setTransformMode: (mode) => set(() => ({ currentMode: mode })),
 }));
 
 export default useStore;
