@@ -17,12 +17,18 @@ const Lights = () => {
       spotLight.position.copy(SCENE.SPOTLIGHT_POS);
       spotLight.name = `Spotlight_${numSpotLights}`;
       scene.add(spotLight);
-      // Representation
+      // Target
       const boxGeom = new BoxGeometry(
         SCENE.SPOTLIGHT_SIZE,
         SCENE.SPOTLIGHT_SIZE,
         SCENE.SPOTLIGHT_SIZE
       );
+      const targetMat = new MeshStandardMaterial({ color: "blue" });
+      const target = new Mesh(boxGeom, targetMat);
+      target.name = `Spotlight_Target_${numSpotLights}`;
+      scene.add(target);
+      spotLight.target = target;
+      // Representation
       const boxMat = new MeshStandardMaterial({ color: "red" });
       const box = new Mesh(boxGeom, boxMat);
       box.position.copy(SCENE.SPOTLIGHT_POS);
