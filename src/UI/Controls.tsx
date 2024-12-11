@@ -7,6 +7,7 @@ const Controls = () => {
   const dropVisible = useStore((state) => state.dropVisible);
   const setDragDrop = useStore((state) => state.setDragDrop);
   const getSelectedObject = useStore((state) => state.getSelectedObject);
+  const createSpotLight = useStore((state) => state.createSpotLight);
 
   const toggleDragDrop = () => {
     setDragDrop(!dropVisible);
@@ -35,6 +36,12 @@ const Controls = () => {
               toggleLights(object, value);
             },
           },
+        },
+        { collapsed: true }
+      ),
+      Lights: folder(
+        {
+          AddSpotLight: button(() => createSpotLight(true)),
         },
         { collapsed: true }
       ),

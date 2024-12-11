@@ -27,7 +27,7 @@ function App() {
         }}
         onContextMenu={(event) => {
           if (selectedObject !== null) {
-            setTransformMode((currentMode + 1) % 3);
+            setTransformMode((currentMode + 1) % TRANSFORM_NODES.length);
           }
         }}
         onPointerMissed={(event) => {

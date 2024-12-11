@@ -15,6 +15,8 @@ interface FileState {
   getSelectedObject: () => Object3D | null;
   currentMode: number;
   setTransformMode: (mode: number) => void;
+  spotLightRequired: boolean;
+  createSpotLight: (status: boolean) => void;
 }
 
 const useStore = create<FileState>((set, get) => ({
@@ -31,6 +33,8 @@ const useStore = create<FileState>((set, get) => ({
   getSelectedObject: () => get().selectedObject,
   currentMode: 0,
   setTransformMode: (mode) => set(() => ({ currentMode: mode })),
+  spotLightRequired: false,
+  createSpotLight: (status) => set(() => ({ spotLightRequired: status })),
 }));
 
 export default useStore;
