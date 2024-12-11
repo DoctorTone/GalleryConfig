@@ -31,7 +31,6 @@ const Controls = () => {
             value: true,
             onChange: (value) => {
               const object = getSelectedObject();
-              console.log("Object = ", object);
               if (!object) return;
               toggleLights(object, value);
             },
