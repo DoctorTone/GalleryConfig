@@ -12,11 +12,12 @@ interface FileState {
   setCheckState: (status: boolean) => void;
   selectedObject: Object3D | null;
   setSelectedObject: (object: Object3D | null) => void;
+  getSelectedObject: () => Object3D | null;
   currentMode: number;
   setTransformMode: (mode: number) => void;
 }
 
-const useStore = create<FileState>((set) => ({
+const useStore = create<FileState>((set, get) => ({
   file: null,
   setFile: (objFile) => set(() => ({ file: objFile })),
   intensity: 0.5,
@@ -27,6 +28,7 @@ const useStore = create<FileState>((set) => ({
   setCheckState: (status) => set(() => ({ checkState: status })),
   selectedObject: null,
   setSelectedObject: (object) => set(() => ({ selectedObject: object })),
+  getSelectedObject: () => get().selectedObject,
   currentMode: 0,
   setTransformMode: (mode) => set(() => ({ currentMode: mode })),
 }));
