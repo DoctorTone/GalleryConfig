@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, TransformControls } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import Art from "./components/Art";
 import { SCENE, TRANSFORM_NODES } from "./state/Config";
 import DragDrop from "./components/DragDrop";
@@ -40,12 +40,6 @@ function App() {
         <Art />
         <OrbitControls makeDefault />
         <ObjectSelection />
-        {selectedObject !== null && (
-          <TransformControls
-            object={selectedObject}
-            mode={TRANSFORM_NODES[currentMode]}
-          />
-        )}
       </Canvas>
       <DragDrop />
       <Controls />

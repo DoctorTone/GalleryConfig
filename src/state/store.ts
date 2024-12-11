@@ -17,6 +17,7 @@ interface FileState {
   setTransformMode: (mode: number) => void;
   spotLightRequired: boolean;
   createSpotLight: (status: boolean) => void;
+  numSpotLights: number;
 }
 
 const useStore = create<FileState>((set, get) => ({
@@ -34,7 +35,12 @@ const useStore = create<FileState>((set, get) => ({
   currentMode: 0,
   setTransformMode: (mode) => set(() => ({ currentMode: mode })),
   spotLightRequired: false,
-  createSpotLight: (status) => set(() => ({ spotLightRequired: status })),
+  createSpotLight: (status) =>
+    set((state) => ({
+      spotLightRequired: status,
+      numSpotLights: status ? state.numSpotLights + 1 : state.numSpotLights,
+    })),
+  numSpotLights: 0,
 }));
 
 export default useStore;

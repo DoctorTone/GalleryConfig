@@ -8,7 +8,8 @@ const SCENE = {
   LOW_RES: 1024,
   MIN_DISTANCE: 0.4,
   MAX_DISTANCE: 2,
-  SPOTLIGHT_POS: new Vector3(0, 2, 0),
+  SPOTLIGHT_POS: new Vector3(0, 3, 0),
+  SPOTLIGHT_SIZE: 0.25,
 };
 
 const TRANSFORM_NODES = ["translate", "rotate", "scale"];
