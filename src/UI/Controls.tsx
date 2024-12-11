@@ -1,4 +1,4 @@
-import { button, useControls } from "leva";
+import { button, folder, useControls } from "leva";
 import useStore from "../state/store";
 
 const Controls = () => {
@@ -22,6 +22,14 @@ const Controls = () => {
           setIntensity(v);
         },
       },
+      Selected: folder({
+        useInternal: {
+          value: true,
+          onChange: (value) => {
+            console.log("Changed it", value);
+          },
+        },
+      }),
     },
     [dropVisible]
   );
