@@ -14,6 +14,8 @@ const Lights = () => {
   useEffect(() => {
     if (spotLightRequired) {
       const spotLight = new SpotLight();
+      // DEBUG
+      console.log("Spot = ", spotLight);
       spotLight.position.copy(SCENE.SPOTLIGHT_POS);
       spotLight.name = `Spotlight_${numSpotLights}`;
       scene.add(spotLight);

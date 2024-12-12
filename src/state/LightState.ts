@@ -1,3 +1,5 @@
+import { LIGHTS } from "../state/Config";
+
 export class LightState {
   color: number;
   intensity: number;
@@ -8,12 +10,12 @@ export class LightState {
   uuid: string;
 
   constructor(id: string) {
-    this.color = 0xffffff;
-    this.intensity = 1;
-    this.distance = 0;
-    this.angle = Math.PI / 2;
-    this.penumbra = 0;
-    this.decay = 2;
+    this.color = LIGHTS.COLOR;
+    this.intensity = LIGHTS.INTENSITY;
+    this.distance = LIGHTS.DECAY;
+    this.angle = LIGHTS.ANGLE;
+    this.penumbra = LIGHTS.PENUMBRA;
+    this.decay = LIGHTS.DECAY;
     this.uuid = id;
   }
 }

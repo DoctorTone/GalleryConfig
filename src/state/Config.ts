@@ -14,4 +14,13 @@ const SCENE = {
 
 const TRANSFORM_NODES = ["translate", "rotate", "scale"];
 
-export { SCENE, TRANSFORM_NODES };
+const LIGHTS = {
+  COLOR: 0xffffff,
+  INTENSITY: 1,
+  DISTANCE: 0,
+  ANGLE: Math.PI / 3,
+  PENUMBRA: 0,
+  DECAY: 2,
+};
+
+export { SCENE, TRANSFORM_NODES, LIGHTS };
