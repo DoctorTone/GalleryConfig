@@ -32,7 +32,9 @@ function App() {
         }}
         onPointerMissed={(event) => {
           {
-            event.type === "click" && setSelectedObject(null);
+            if (event.type === "click") {
+              setSelectedObject(null);
+            }
           }
         }}
       >

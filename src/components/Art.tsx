@@ -10,6 +10,7 @@ const Art = () => {
   const { scene } = useThree();
   const file = useStore((state) => state.file);
   const setFile = useStore((state) => state.setFile);
+  const addModelState = useStore((state) => state.addModelState);
 
   useEffect(() => {
     if (file !== null) {
@@ -25,6 +26,7 @@ const Art = () => {
           //@ts-ignore
           scene.add(model.scene);
           setFile(null);
+          addModelState(model.scene.uuid);
         } catch (error) {
           return null;
         }

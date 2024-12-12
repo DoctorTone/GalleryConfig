@@ -1,5 +1,7 @@
 import { Object3D } from "three";
 import { create } from "zustand";
+import { SCENE } from "./Config";
+import { ModelState } from "./ModelState";
 
 interface FileState {
   file: File | null;
@@ -18,12 +20,15 @@ interface FileState {
   spotLightRequired: boolean;
   createSpotLight: (status: boolean) => void;
   numSpotLights: number;
+  modelStates: ModelState[];
+  addModelState: (uuid: string) => void;
+  getSelectedObjectState: (id: string) => ModelState | undefined;
 }
 
 const useStore = create<FileState>((set, get) => ({
   file: null,
   setFile: (objFile) => set(() => ({ file: objFile })),
-  intensity: 0.5,
+  intensity: SCENE.ambientIntensity,
   setIntensity: (value) => set(() => ({ intensity: value })),
   dropVisible: true,
   setDragDrop: (status) => set(() => ({ dropVisible: status })),
@@ -41,6 +46,13 @@ const useStore = create<FileState>((set, get) => ({
       numSpotLights: status ? state.numSpotLights + 1 : state.numSpotLights,
     })),
   numSpotLights: 0,
+  modelStates: [],
+  addModelState: (uuid) =>
+    set((state) => ({
+      modelStates: [...state.modelStates, new ModelState(uuid)],
+    })),
+  getSelectedObjectState: (id) =>
+    get().modelStates.find((element) => element.uuid === id),
 }));
 
 export default useStore;

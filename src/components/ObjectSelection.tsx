@@ -14,11 +14,8 @@ const ObjectSelection = () => {
 
   const update = (event) => {
     if (currentMode === 0) {
-      console.log("Dragging");
       if (selectedObject?.name.includes("Spotlight")) {
-        console.log("Dragging spotlight");
         const spotNumber = selectedObject.name.slice(-1);
-        console.log("Spot number = ", spotNumber);
         const spotlight = scene.getObjectByName(`Spotlight_${spotNumber}`);
         spotlight?.position.copy(selectedObject.position);
       }
