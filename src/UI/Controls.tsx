@@ -29,18 +29,30 @@ const Controls = () => {
     set({ useInternal: state?.useInternal });
   }, [selectedObject]);
 
-  const [, set] = useControls(
-    () => ({
-      dragDrop: button(toggleDragDrop),
-      ambient: {
-        value: 0.5,
-        min: 0,
-        max: 3,
-        step: 0.01,
-        onChange: (v) => {
-          setIntensity(v);
-        },
+  useControls({
+    dragDrop: button(toggleDragDrop),
+    ambient: {
+      value: 0.5,
+      min: 0,
+      max: 3,
+      step: 0.01,
+      onChange: (v) => {
+        setIntensity(v);
       },
+    },
+  });
+
+  useControls({
+    Lights: folder(
+      {
+        AddSpotLight: button(() => createSpotLight(true)),
+      },
+      { collapsed: true }
+    ),
+  });
+
+  const [, set] = useControls(() => ({
+    Selection: folder({
       useInternal: {
         value: true,
         onChange: (value) => {
@@ -54,15 +66,28 @@ const Controls = () => {
             value;
         },
       },
-      Lights: folder(
-        {
-          AddSpotLight: button(() => createSpotLight(true)),
-        },
-        { collapsed: true }
-      ),
+      wireframe: {
+        value: false,
+      },
+      locked: {
+        value: false,
+      },
     }),
-    [dropVisible]
-  );
+  }));
+
+  useControls({
+    "Selected Light": folder({
+      intensity: {
+        value: 1,
+        min: 0,
+        max: 20,
+        step: 0.01,
+        onChange: (v) => {
+          setIntensity(v);
+        },
+      },
+    }),
+  });
 
   return null;
 };

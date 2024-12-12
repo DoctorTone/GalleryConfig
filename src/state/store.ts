@@ -2,6 +2,7 @@ import { Object3D } from "three";
 import { create } from "zustand";
 import { SCENE } from "./Config";
 import { ModelState } from "./ModelState";
+import { LightState } from "./LightState";
 
 interface FileState {
   file: File | null;
@@ -23,6 +24,9 @@ interface FileState {
   modelStates: ModelState[];
   addModelState: (uuid: string) => void;
   getSelectedObjectState: (id: string) => ModelState | undefined;
+  lightStates: LightState[];
+  addLightState: (uuid: string) => void;
+  getSelectedLightState: (id: string) => LightState | undefined;
 }
 
 const useStore = create<FileState>((set, get) => ({
@@ -53,6 +57,13 @@ const useStore = create<FileState>((set, get) => ({
     })),
   getSelectedObjectState: (id) =>
     get().modelStates.find((element) => element.uuid === id),
+  lightStates: [],
+  addLightState: (uuid) =>
+    set((state) => ({
+      lightStates: [...state.lightStates, new LightState(uuid)],
+    })),
+  getSelectedLightState: (id) =>
+    get().lightStates.find((element) => element.uuid === id),
 }));
 
 export default useStore;
