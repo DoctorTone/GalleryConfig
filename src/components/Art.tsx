@@ -1,10 +1,8 @@
-import { Suspense, useState, useEffect } from "react";
+import { useEffect } from "react";
 import useStore from "../state/store";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
-import { GLTF } from "three-stdlib";
 import { useThree } from "@react-three/fiber";
-import { Group } from "three";
 
 const Art = () => {
   const { scene } = useThree();

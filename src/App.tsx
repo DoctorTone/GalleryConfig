@@ -28,7 +28,7 @@ function App() {
             setCheckState(true);
           }
         }}
-        onContextMenu={(event) => {
+        onContextMenu={() => {
           if (selectedModel !== null || selectedLight !== null) {
             setTransformMode((currentMode + 1) % TRANSFORM_NODES.length);
           }

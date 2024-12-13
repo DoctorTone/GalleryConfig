@@ -2,22 +2,24 @@ import { useDropzone } from "react-dropzone";
 import Typography from "@mui/material/Typography";
 import useStore from "../state/store";
 import Button from "@mui/material/Button";
+import { useCallback } from "react";
 
 const DragDrop = () => {
   const setFile = useStore((state) => state.setFile);
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
+
   const dropVisible = useStore((state) => state.dropVisible);
   const toggleDragDrop = useStore((state) => state.toggleDragDrop);
 
   const clearFiles = () => {
     toggleDragDrop();
-    acceptedFiles.length = 0;
   };
 
-  const files = acceptedFiles.map((file) => {
-    console.log("File = ", file);
-    setFile(file);
-  });
+  const onDrop = useCallback((acceptedFiles: any) => {
+    // DEBUG
+    console.log("File = ", acceptedFiles[0]);
+    setFile(acceptedFiles[0]);
+  }, []);
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
     <div id="drop" className={dropVisible ? "d-block" : "d-none"}>
