@@ -12,7 +12,7 @@ export class LightState {
   constructor(id: string) {
     this.color = LIGHTS.COLOR;
     this.intensity = LIGHTS.INTENSITY;
-    this.distance = LIGHTS.DECAY;
+    this.distance = LIGHTS.DISTANCE;
     this.angle = LIGHTS.ANGLE;
     this.penumbra = LIGHTS.PENUMBRA;
     this.decay = LIGHTS.DECAY;

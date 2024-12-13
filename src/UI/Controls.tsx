@@ -30,6 +30,15 @@ const Controls = () => {
       const state = getSelectedModelState(model.uuid);
       set({ useInternal: state?.useInternal });
     }
+
+    const light = getSelectedLight();
+    if (light !== null) {
+      const state = getSelectedLightState(light.uuid);
+      setLight({ intensity: state?.intensity });
+      setLight({ distance: state?.distance });
+      setLight({ angle: state?.angle });
+      setLight({ penumbra: state?.penumbra });
+    }
   }, [selectedModel, selectedLight]);
 
   useControls({
@@ -77,7 +86,7 @@ const Controls = () => {
     }),
   }));
 
-  useControls({
+  const [, setLight] = useControls(() => ({
     "Selected Light": folder({
       intensity: {
         value: LIGHTS.INTENSITY,
@@ -132,7 +141,7 @@ const Controls = () => {
         },
       },
     }),
-  });
+  }));
 
   return null;
 };
