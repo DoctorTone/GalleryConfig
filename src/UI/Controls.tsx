@@ -1,6 +1,6 @@
 import { button, folder, useControls } from "leva";
 import useStore from "../state/store";
-import { toggleLights } from "../utils/Utils";
+import { toggleLights, toggleWireframe } from "../utils/Utils";
 import { useEffect } from "react";
 import { LIGHTS } from "../state/Config";
 
@@ -29,6 +29,7 @@ const Controls = () => {
     if (model !== null) {
       const state = getSelectedModelState(model.uuid);
       set({ useInternal: state?.useInternal });
+      set({ wireframe: state?.wireframe });
     }
 
     const light = getSelectedLight();
@@ -68,17 +69,29 @@ const Controls = () => {
       useInternal: {
         value: true,
         onChange: (value) => {
-          const object = getSelectedModel();
-          if (!object) return;
-          toggleLights(object, value);
-          const state = getSelectedModelState(object.uuid);
+          const model = getSelectedModel();
+          if (!model) return;
+          toggleLights(model, value);
+          const state = getSelectedModelState(model.uuid);
           // DEBUG
           console.log("State = ", state);
-          getSelectedModelState(getSelectedModel()!.uuid!).useInternal = value;
+          getSelectedModelState(model.uuid)!.useInternal = value;
         },
       },
       wireframe: {
         value: false,
+        onChange: (value) => {
+          const model = getSelectedModel();
+          if (!model) return;
+
+          if (model.isGroup) {
+            toggleWireframe(model, value);
+          } else {
+            model.material.wireframe = value;
+          }
+
+          getSelectedModelState(model.uuid)!.wireframe = value;
+        },
       },
       locked: {
         value: false,

@@ -7,3 +7,11 @@ export const toggleLights = (object: Object3D, status: boolean) => {
     }
   });
 };
+
+export const toggleWireframe = (object: Object3D, status: boolean) => {
+  object.traverse((child) => {
+    if (child.isMesh) {
+      child.material.wireframe = status;
+    }
+  });
+};
