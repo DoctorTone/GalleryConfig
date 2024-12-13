@@ -2,6 +2,7 @@ import { button, folder, useControls } from "leva";
 import useStore from "../state/store";
 import { toggleLights } from "../utils/Utils";
 import { useEffect } from "react";
+import { LIGHTS } from "../state/Config";
 
 const Controls = () => {
   const setIntensity = useStore((state) => state.setIntensity);
@@ -79,7 +80,7 @@ const Controls = () => {
   useControls({
     "Selected Light": folder({
       intensity: {
-        value: 1,
+        value: LIGHTS.INTENSITY,
         min: 0,
         max: 20,
         step: 0.01,
@@ -87,8 +88,47 @@ const Controls = () => {
           const light = getSelectedLight();
           if (!light) return;
 
-          getSelectedLightState(light.uuid).intensity = value;
+          getSelectedLightState(light.uuid)!.intensity = value;
           light.intensity = value;
+        },
+      },
+      distance: {
+        value: LIGHTS.DISTANCE,
+        min: 0,
+        max: 20,
+        step: 0.01,
+        onChange: (value) => {
+          const light = getSelectedLight();
+          if (!light) return;
+
+          getSelectedLightState(light.uuid)!.distance = value;
+          light.distance = value;
+        },
+      },
+      angle: {
+        value: LIGHTS.ANGLE,
+        min: 0,
+        max: Math.PI / 2,
+        step: 0.01,
+        onChange: (value) => {
+          const light = getSelectedLight();
+          if (!light) return;
+
+          getSelectedLightState(light.uuid)!.angle = value;
+          light.angle = value;
+        },
+      },
+      penumbra: {
+        value: LIGHTS.PENUMBRA,
+        min: 0,
+        max: 1,
+        step: 0.01,
+        onChange: (value) => {
+          const light = getSelectedLight();
+          if (!light) return;
+
+          getSelectedLightState(light.uuid)!.penumbra = value;
+          light.penumbra = value;
         },
       },
     }),
