@@ -17,6 +17,8 @@ const ObjectSelection = () => {
   const update = (event) => {
     if (currentMode === 0) {
       if (selectedLight) {
+        if (selectedModel?.name.includes("Spotlight_Target")) return;
+
         selectedLight.position.copy(selectedModel!.position);
       }
     }
