@@ -7,10 +7,15 @@ const Controls = () => {
   const setIntensity = useStore((state) => state.setIntensity);
   const dropVisible = useStore((state) => state.dropVisible);
   const setDragDrop = useStore((state) => state.setDragDrop);
-  const getSelectedObject = useStore((state) => state.getSelectedObject);
-  const selectedObject = useStore((state) => state.selectedObject);
-  const getSelectedObjectState = useStore(
-    (state) => state.getSelectedObjectState
+  const getSelectedModel = useStore((state) => state.getSelectedModel);
+  const selectedModel = useStore((state) => state.selectedModel);
+  const selectedLight = useStore((state) => state.selectedLight);
+  const getSelectedLight = useStore((state) => state.getSelectedLight);
+  const getSelectedModelState = useStore(
+    (state) => state.getSelectedModelState
+  );
+  const getSelectedLightState = useStore(
+    (state) => state.getSelectedLightState
   );
   const createSpotLight = useStore((state) => state.createSpotLight);
 
@@ -19,15 +24,12 @@ const Controls = () => {
   };
 
   useEffect(() => {
-    const object = getSelectedObject();
-    if (!object) {
-      set({ useInternal: true });
-      return;
+    const model = getSelectedModel();
+    if (model !== null) {
+      const state = getSelectedModelState(model.uuid);
+      set({ useInternal: state?.useInternal });
     }
-
-    const state = getSelectedObjectState(object.uuid);
-    set({ useInternal: state?.useInternal });
-  }, [selectedObject]);
+  }, [selectedModel, selectedLight]);
 
   useControls({
     dragDrop: button(toggleDragDrop),
@@ -56,14 +58,13 @@ const Controls = () => {
       useInternal: {
         value: true,
         onChange: (value) => {
-          const object = getSelectedObject();
+          const object = getSelectedModel();
           if (!object) return;
           toggleLights(object, value);
-          const state = getSelectedObjectState(object.uuid);
+          const state = getSelectedModelState(object.uuid);
           // DEBUG
           console.log("State = ", state);
-          getSelectedObjectState(getSelectedObject()!.uuid!).useInternal =
-            value;
+          getSelectedModelState(getSelectedModel()!.uuid!).useInternal = value;
         },
       },
       wireframe: {
@@ -82,8 +83,12 @@ const Controls = () => {
         min: 0,
         max: 20,
         step: 0.01,
-        onChange: (v) => {
-          setIntensity(v);
+        onChange: (value) => {
+          const light = getSelectedLight();
+          if (!light) return;
+
+          getSelectedLightState(light.uuid).intensity = value;
+          light.intensity = value;
         },
       },
     }),

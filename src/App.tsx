@@ -10,8 +10,10 @@ import ObjectSelection from "./components/ObjectSelection";
 
 function App() {
   const setCheckState = useStore((state) => state.setCheckState);
-  const selectedObject = useStore((state) => state.selectedObject);
-  const setSelectedObject = useStore((state) => state.setSelectedObject);
+  const selectedModel = useStore((state) => state.selectedModel);
+  const setSelectedModel = useStore((state) => state.setSelectedModel);
+  const selectedLight = useStore((state) => state.selectedLight);
+  const setSelectedLight = useStore((state) => state.setSelectedLight);
   const currentMode = useStore((state) => state.currentMode);
   const setTransformMode = useStore((state) => state.setTransformMode);
 
@@ -21,19 +23,20 @@ function App() {
         camera={{ position: SCENE.cameraPosition, fov: 60 }}
         onClick={(event) => {
           event.stopPropagation();
-          if (selectedObject === null) {
+          if (selectedModel === null && selectedLight === null) {
             setCheckState(true);
           }
         }}
         onContextMenu={(event) => {
-          if (selectedObject !== null) {
+          if (selectedModel !== null || selectedLight !== null) {
             setTransformMode((currentMode + 1) % TRANSFORM_NODES.length);
           }
         }}
         onPointerMissed={(event) => {
           {
             if (event.type === "click") {
-              setSelectedObject(null);
+              setSelectedModel(null);
+              setSelectedLight(null);
             }
           }
         }}

@@ -13,9 +13,12 @@ interface FileState {
   setDragDrop: (status: boolean) => void;
   checkState: boolean;
   setCheckState: (status: boolean) => void;
-  selectedObject: Object3D | null;
-  setSelectedObject: (object: Object3D | null) => void;
-  getSelectedObject: () => Object3D | null;
+  selectedModel: Object3D | null;
+  setSelectedModel: (object: Object3D | null) => void;
+  getSelectedModel: () => Object3D | null;
+  selectedLight: Object3D | null;
+  setSelectedLight: (object: Object3D | null) => void;
+  getSelectedLight: () => Object3D | null;
   currentMode: number;
   setTransformMode: (mode: number) => void;
   spotLightRequired: boolean;
@@ -23,7 +26,7 @@ interface FileState {
   numSpotLights: number;
   modelStates: ModelState[];
   addModelState: (uuid: string) => void;
-  getSelectedObjectState: (id: string) => ModelState | undefined;
+  getSelectedModelState: (id: string) => ModelState | undefined;
   lightStates: LightState[];
   addLightState: (uuid: string) => void;
   getSelectedLightState: (id: string) => LightState | undefined;
@@ -38,9 +41,12 @@ const useStore = create<FileState>((set, get) => ({
   setDragDrop: (status) => set(() => ({ dropVisible: status })),
   checkState: false,
   setCheckState: (status) => set(() => ({ checkState: status })),
-  selectedObject: null,
-  setSelectedObject: (object) => set(() => ({ selectedObject: object })),
-  getSelectedObject: () => get().selectedObject,
+  selectedModel: null,
+  setSelectedModel: (object) => set(() => ({ selectedModel: object })),
+  getSelectedModel: () => get().selectedModel,
+  selectedLight: null,
+  setSelectedLight: (object) => set(() => ({ selectedLight: object })),
+  getSelectedLight: () => get().selectedLight,
   currentMode: 0,
   setTransformMode: (mode) => set(() => ({ currentMode: mode })),
   spotLightRequired: false,
@@ -55,7 +61,7 @@ const useStore = create<FileState>((set, get) => ({
     set((state) => ({
       modelStates: [...state.modelStates, new ModelState(uuid)],
     })),
-  getSelectedObjectState: (id) =>
+  getSelectedModelState: (id) =>
     get().modelStates.find((element) => element.uuid === id),
   lightStates: [],
   addLightState: (uuid) =>

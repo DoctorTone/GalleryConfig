@@ -6,18 +6,18 @@ import useStore from "../state/store";
 
 const ObjectSelection = () => {
   const setCheckState = useStore((state) => state.setCheckState);
-  const setSelectedObject = useStore((state) => state.setSelectedObject);
-  const selectedObject = useStore((state) => state.selectedObject);
+  const setSelectedModel = useStore((state) => state.setSelectedModel);
+  const setSelectedLight = useStore((state) => state.setSelectedLight);
+  const selectedModel = useStore((state) => state.selectedModel);
+  const selectedLight = useStore((state) => state.selectedLight);
   const checkState = useStore((state) => state.checkState);
   const { raycaster, scene } = useThree();
   const currentMode = useStore((state) => state.currentMode);
 
   const update = (event) => {
     if (currentMode === 0) {
-      if (selectedObject?.name.includes("Spotlight")) {
-        const spotNumber = selectedObject.name.slice(-1);
-        const spotlight = scene.getObjectByName(`Spotlight_${spotNumber}`);
-        spotlight?.position.copy(selectedObject.position);
+      if (selectedLight) {
+        selectedLight.position.copy(selectedModel!.position);
       }
     }
   };
@@ -40,7 +40,13 @@ const ObjectSelection = () => {
           currentObject = currentObject.parent;
         }
       }
-      setSelectedObject(selected);
+      setSelectedModel(selected);
+      if (selected.name.includes("Spotlight")) {
+        const spotNumber = selected?.name.slice(-1);
+        const spotLight = scene.getObjectByName(`Spotlight_${spotNumber}`);
+        if (!spotLight) return;
+        setSelectedLight(spotLight);
+      }
     }
 
     setCheckState(false);
@@ -48,9 +54,9 @@ const ObjectSelection = () => {
 
   return (
     <>
-      {selectedObject !== null && (
+      {selectedModel !== null && (
         <TransformControls
-          object={selectedObject}
+          object={selectedModel}
           mode={TRANSFORM_NODES[currentMode]}
           onChange={update}
         />
