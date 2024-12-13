@@ -19,6 +19,7 @@ const Controls = () => {
   );
   const createSpotLight = useStore((state) => state.createSpotLight);
   const unlockAll = useStore((state) => state.unlockAll);
+  const setExport = useStore((state) => state.setExport);
 
   const toggleDrop = () => {
     toggleDragDrop();
@@ -26,6 +27,10 @@ const Controls = () => {
 
   const unlock = () => {
     unlockAll();
+  };
+
+  const exportScene = () => {
+    setExport(true);
   };
 
   useEffect(() => {
@@ -50,6 +55,7 @@ const Controls = () => {
   useControls({
     dragDrop: button(toggleDrop),
     unlock: button(unlock),
+    export: button(exportScene),
     ambient: {
       value: 0.5,
       min: 0,

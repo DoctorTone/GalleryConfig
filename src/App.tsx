@@ -7,6 +7,7 @@ import Controls from "./UI/Controls";
 import Lights from "./components/Lights";
 import useStore from "./state/store";
 import ObjectSelection from "./components/ObjectSelection";
+import SceneExport from "./components/SceneExport";
 
 function App() {
   const setCheckState = useStore((state) => state.setCheckState);
@@ -45,6 +46,7 @@ function App() {
         <Art />
         <OrbitControls makeDefault />
         <ObjectSelection />
+        <SceneExport />
       </Canvas>
       <DragDrop />
       <Controls />

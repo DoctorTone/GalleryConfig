@@ -7,6 +7,8 @@ import { LightState } from "./LightState";
 interface FileState {
   file: File | null;
   setFile: (file: File | null) => void;
+  exportRequired: boolean;
+  setExport: (status: boolean) => void;
   intensity: number;
   setIntensity: (value: number) => void;
   dropVisible: boolean;
@@ -36,6 +38,8 @@ interface FileState {
 const useStore = create<FileState>((set, get) => ({
   file: null,
   setFile: (objFile) => set(() => ({ file: objFile })),
+  exportRequired: false,
+  setExport: (status) => set(() => ({ exportRequired: status })),
   intensity: SCENE.ambientIntensity,
   setIntensity: (value) => set(() => ({ intensity: value })),
   dropVisible: true,
