@@ -10,7 +10,7 @@ interface FileState {
   intensity: number;
   setIntensity: (value: number) => void;
   dropVisible: boolean;
-  setDragDrop: (status: boolean) => void;
+  toggleDragDrop: () => void;
   checkState: boolean;
   setCheckState: (status: boolean) => void;
   selectedModel: Object3D | null;
@@ -30,6 +30,7 @@ interface FileState {
   lightStates: LightState[];
   addLightState: (uuid: string) => void;
   getSelectedLightState: (id: string) => LightState | undefined;
+  unlockAll: () => void;
 }
 
 const useStore = create<FileState>((set, get) => ({
@@ -38,7 +39,7 @@ const useStore = create<FileState>((set, get) => ({
   intensity: SCENE.ambientIntensity,
   setIntensity: (value) => set(() => ({ intensity: value })),
   dropVisible: true,
-  setDragDrop: (status) => set(() => ({ dropVisible: status })),
+  toggleDragDrop: () => set((state) => ({ dropVisible: !state.dropVisible })),
   checkState: false,
   setCheckState: (status) => set(() => ({ checkState: status })),
   selectedModel: null,
@@ -70,6 +71,13 @@ const useStore = create<FileState>((set, get) => ({
     })),
   getSelectedLightState: (id) =>
     get().lightStates.find((element) => element.uuid === id),
+  unlockAll: () =>
+    set((state) => ({
+      modelStates: state.modelStates.map((element) => ({
+        ...element,
+        locked: false,
+      })),
+    })),
 }));
 
 export default useStore;

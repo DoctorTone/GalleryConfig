@@ -7,10 +7,10 @@ const DragDrop = () => {
   const setFile = useStore((state) => state.setFile);
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
   const dropVisible = useStore((state) => state.dropVisible);
-  const setDragDrop = useStore((state) => state.setDragDrop);
+  const toggleDragDrop = useStore((state) => state.toggleDragDrop);
 
   const clearFiles = () => {
-    setDragDrop(false);
+    toggleDragDrop();
     acceptedFiles.length = 0;
   };
 

@@ -7,6 +7,9 @@ import useStore from "../state/store";
 const ObjectSelection = () => {
   const setCheckState = useStore((state) => state.setCheckState);
   const setSelectedModel = useStore((state) => state.setSelectedModel);
+  const getSelectedModelState = useStore(
+    (state) => state.getSelectedModelState
+  );
   const setSelectedLight = useStore((state) => state.setSelectedLight);
   const selectedModel = useStore((state) => state.selectedModel);
   const selectedLight = useStore((state) => state.selectedLight);
@@ -42,6 +45,16 @@ const ObjectSelection = () => {
           currentObject = currentObject.parent;
         }
       }
+      // Check that object not locked
+      const state = getSelectedModelState(selected!.uuid);
+      // DEBUG
+      console.log("State = ", state);
+      if (!state) return;
+      if (state.locked) {
+        setCheckState(false);
+        return;
+      }
+
       setSelectedModel(selected);
       if (selected.name.includes("Spotlight")) {
         const spotNumber = selected?.name.slice(-1);

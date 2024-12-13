@@ -6,7 +6,7 @@ export class ModelState {
 
   constructor(id: string) {
     this.useInternal = true;
-    this.wireframe = true;
+    this.wireframe = false;
     this.locked = false;
     this.uuid = id;
   }

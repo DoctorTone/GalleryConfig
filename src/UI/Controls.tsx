@@ -1,13 +1,12 @@
 import { button, folder, useControls } from "leva";
 import useStore from "../state/store";
 import { toggleLights, toggleWireframe } from "../utils/Utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { LIGHTS } from "../state/Config";
 
 const Controls = () => {
   const setIntensity = useStore((state) => state.setIntensity);
-  const dropVisible = useStore((state) => state.dropVisible);
-  const setDragDrop = useStore((state) => state.setDragDrop);
+  const toggleDragDrop = useStore((state) => state.toggleDragDrop);
   const getSelectedModel = useStore((state) => state.getSelectedModel);
   const selectedModel = useStore((state) => state.selectedModel);
   const selectedLight = useStore((state) => state.selectedLight);
@@ -19,9 +18,14 @@ const Controls = () => {
     (state) => state.getSelectedLightState
   );
   const createSpotLight = useStore((state) => state.createSpotLight);
+  const unlockAll = useStore((state) => state.unlockAll);
 
-  const toggleDragDrop = () => {
-    setDragDrop(!dropVisible);
+  const toggleDrop = () => {
+    toggleDragDrop();
+  };
+
+  const unlock = () => {
+    unlockAll();
   };
 
   useEffect(() => {
@@ -30,6 +34,7 @@ const Controls = () => {
       const state = getSelectedModelState(model.uuid);
       set({ useInternal: state?.useInternal });
       set({ wireframe: state?.wireframe });
+      set({ locked: state?.locked });
     }
 
     const light = getSelectedLight();
@@ -43,7 +48,8 @@ const Controls = () => {
   }, [selectedModel, selectedLight]);
 
   useControls({
-    dragDrop: button(toggleDragDrop),
+    dragDrop: button(toggleDrop),
+    unlock: button(unlock),
     ambient: {
       value: 0.5,
       min: 0,
@@ -95,6 +101,12 @@ const Controls = () => {
       },
       locked: {
         value: false,
+        onChange: (value) => {
+          const model = getSelectedModel();
+          if (!model) return;
+
+          getSelectedModelState(model.uuid)!.locked = value;
+        },
       },
     }),
   }));
