@@ -1,8 +1,9 @@
 import { button, folder, useControls } from "leva";
 import useStore from "../state/store";
 import { toggleLights, toggleWireframe } from "../utils/Utils";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { LIGHTS } from "../state/Config";
+import { Mesh, MeshStandardMaterial, SpotLight } from "three";
 
 const Controls = () => {
   const setIntensity = useStore((state) => state.setIntensity);
@@ -37,17 +38,24 @@ const Controls = () => {
     const model = getSelectedModel();
     if (model !== null) {
       const state = getSelectedModelState(model.uuid);
+      //@ts-ignore
       set({ useInternal: state?.useInternal });
+      //@ts-ignore
       set({ wireframe: state?.wireframe });
+      //@ts-ignore
       set({ locked: state?.locked });
     }
 
     const light = getSelectedLight();
     if (light !== null) {
       const state = getSelectedLightState(light.uuid);
+      //@ts-ignore
       setLight({ intensity: state?.intensity });
+      //@ts-ignore
       setLight({ distance: state?.distance });
+      //@ts-ignore
       setLight({ angle: state?.angle });
+      //@ts-ignore
       setLight({ penumbra: state?.penumbra });
     }
   }, [selectedModel, selectedLight]);
@@ -96,10 +104,11 @@ const Controls = () => {
           const model = getSelectedModel();
           if (!model) return;
 
-          if (model.isGroup) {
+          if (model.type == "Group") {
             toggleWireframe(model, value);
           } else {
-            model.material.wireframe = value;
+            ((model as Mesh).material as MeshStandardMaterial).wireframe =
+              value;
           }
 
           getSelectedModelState(model.uuid)!.wireframe = value;
@@ -129,7 +138,7 @@ const Controls = () => {
           if (!light) return;
 
           getSelectedLightState(light.uuid)!.intensity = value;
-          light.intensity = value;
+          (light as SpotLight).intensity = value;
         },
       },
       distance: {
@@ -142,7 +151,7 @@ const Controls = () => {
           if (!light) return;
 
           getSelectedLightState(light.uuid)!.distance = value;
-          light.distance = value;
+          (light as SpotLight).distance = value;
         },
       },
       angle: {
@@ -155,7 +164,7 @@ const Controls = () => {
           if (!light) return;
 
           getSelectedLightState(light.uuid)!.angle = value;
-          light.angle = value;
+          (light as SpotLight).angle = value;
         },
       },
       penumbra: {
@@ -168,7 +177,7 @@ const Controls = () => {
           if (!light) return;
 
           getSelectedLightState(light.uuid)!.penumbra = value;
-          light.penumbra = value;
+          (light as SpotLight).penumbra = value;
         },
       },
     }),

@@ -12,7 +12,11 @@ const SCENE = {
   SPOTLIGHT_SIZE: 0.25,
 };
 
-const TRANSFORM_NODES = ["translate", "rotate", "scale"];
+const TRANSFORM_NODES: ("translate" | "rotate" | "scale")[] = [
+  "translate",
+  "rotate",
+  "scale",
+];
 
 const LIGHTS = {
   COLOR: 0xffffff,

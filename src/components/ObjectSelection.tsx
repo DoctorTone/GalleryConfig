@@ -17,7 +17,7 @@ const ObjectSelection = () => {
   const { raycaster, scene } = useThree();
   const currentMode = useStore((state) => state.currentMode);
 
-  const update = (event) => {
+  const update = () => {
     if (currentMode === 0) {
       if (selectedLight) {
         if (selectedModel?.name.includes("Spotlight_Target")) return;
@@ -38,11 +38,11 @@ const ObjectSelection = () => {
       let currentObject = intersects[0].object;
       let selected = null;
       while (!found) {
-        if (currentObject.parent!.isScene) {
+        if (currentObject.parent!.type === "Scene") {
           selected = currentObject;
           found = true;
         } else {
-          currentObject = currentObject.parent;
+          currentObject = currentObject.parent!;
         }
       }
       // Check that object not locked
@@ -56,7 +56,7 @@ const ObjectSelection = () => {
       }
 
       setSelectedModel(selected);
-      if (selected.name.includes("Spotlight")) {
+      if (selected!.name.includes("Spotlight")) {
         const spotNumber = selected?.name.slice(-1);
         const spotLight = scene.getObjectByName(`Spotlight_${spotNumber}`);
         if (!spotLight) return;

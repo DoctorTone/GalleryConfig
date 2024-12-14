@@ -1,8 +1,8 @@
-import { Object3D } from "three";
+import { Light, Mesh, Object3D } from "three";
 
 export const toggleLights = (object: Object3D, status: boolean) => {
   object.traverse((child) => {
-    if (child.isLight) {
+    if (child instanceof Light) {
       child.visible = status;
     }
   });
@@ -10,7 +10,7 @@ export const toggleLights = (object: Object3D, status: boolean) => {
 
 export const toggleWireframe = (object: Object3D, status: boolean) => {
   object.traverse((child) => {
-    if (child.isMesh) {
+    if (child instanceof Mesh) {
       child.material.wireframe = status;
     }
   });
