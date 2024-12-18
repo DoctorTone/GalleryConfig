@@ -128,6 +128,17 @@ const Controls = () => {
 
   const [, setLight] = useControls(() => ({
     "Selected Light": folder({
+      helper: {
+        value: false,
+        onChange: (value) => {
+          const light = getSelectedLight();
+          if (!light) return;
+
+          // Get helper
+          const lightState = getSelectedLightState(light.uuid);
+          lightState!.helperVisible = value;
+        },
+      },
       intensity: {
         value: LIGHTS.INTENSITY,
         min: 0,

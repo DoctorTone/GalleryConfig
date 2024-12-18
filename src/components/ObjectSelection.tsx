@@ -3,6 +3,7 @@ import { TransformControls } from "@react-three/drei";
 import { useEffect } from "react";
 import { TRANSFORM_NODES } from "../state/Config";
 import useStore from "../state/store";
+import { LineSegments } from "three";
 
 const ObjectSelection = () => {
   const setCheckState = useStore((state) => state.setCheckState);
@@ -36,6 +37,12 @@ const ObjectSelection = () => {
       console.log("Selected = ", intersects[0].object);
       let found = false;
       let currentObject = intersects[0].object;
+      // Do not pick helpers
+      if (currentObject instanceof LineSegments) {
+        setCheckState(false);
+        return;
+      }
+
       let selected = null;
       while (!found) {
         if (currentObject.parent!.type === "Scene") {
@@ -49,8 +56,7 @@ const ObjectSelection = () => {
       const state = getSelectedModelState(selected!.uuid);
       // DEBUG
       console.log("State = ", state);
-      if (!state) return;
-      if (state.locked) {
+      if (!state || state.locked) {
         setCheckState(false);
         return;
       }

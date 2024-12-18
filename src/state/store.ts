@@ -30,7 +30,7 @@ interface FileState {
   addModelState: (uuid: string) => void;
   getSelectedModelState: (id: string) => ModelState | undefined;
   lightStates: LightState[];
-  addLightState: (uuid: string) => void;
+  addLightState: (uuid: string, helperID: string) => void;
   getSelectedLightState: (id: string) => LightState | undefined;
   unlockAll: () => void;
 }
@@ -69,9 +69,9 @@ const useStore = create<FileState>((set, get) => ({
   getSelectedModelState: (id) =>
     get().modelStates.find((element) => element.uuid === id),
   lightStates: [],
-  addLightState: (uuid) =>
+  addLightState: (uuid, helperID) =>
     set((state) => ({
-      lightStates: [...state.lightStates, new LightState(uuid)],
+      lightStates: [...state.lightStates, new LightState(uuid, helperID)],
     })),
   getSelectedLightState: (id) =>
     get().lightStates.find((element) => element.uuid === id),

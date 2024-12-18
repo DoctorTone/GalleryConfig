@@ -8,8 +8,10 @@ export class LightState {
   penumbra: number;
   decay: number;
   uuid: string;
+  helperID: string;
+  helperVisible: boolean;
 
-  constructor(id: string) {
+  constructor(id: string, helperID: string) {
     this.color = LIGHTS.COLOR;
     this.intensity = LIGHTS.INTENSITY;
     this.distance = LIGHTS.DISTANCE;
@@ -17,5 +19,7 @@ export class LightState {
     this.penumbra = LIGHTS.PENUMBRA;
     this.decay = LIGHTS.DECAY;
     this.uuid = id;
+    this.helperID = helperID;
+    this.helperVisible = false;
   }
 }

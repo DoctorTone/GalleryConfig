@@ -1,5 +1,11 @@
 import { useEffect } from "react";
-import { BoxGeometry, Mesh, MeshStandardMaterial, SpotLight } from "three";
+import {
+  BoxGeometry,
+  Mesh,
+  MeshStandardMaterial,
+  SpotLight,
+  SpotLightHelper,
+} from "three";
 import { useThree } from "@react-three/fiber";
 import useStore from "../state/store";
 import { SCENE } from "../state/Config";
@@ -16,11 +22,12 @@ const Lights = () => {
   useEffect(() => {
     if (spotLightRequired) {
       const spotLight = new SpotLight();
-      // DEBUG
-      console.log("Spot = ", spotLight);
       spotLight.position.copy(SCENE.SPOTLIGHT_POS);
       spotLight.name = `Spotlight_${numSpotLights}`;
       scene.add(spotLight);
+      // Helper
+      const spotLightHelper = new SpotLightHelper(spotLight);
+      scene.add(spotLightHelper);
       // Target
       const boxGeom = new BoxGeometry(
         SCENE.SPOTLIGHT_SIZE,
@@ -43,7 +50,7 @@ const Lights = () => {
       // DEBUG
       console.log("Created ", box.name);
       createSpotLight(false);
-      addLightState(spotLight.uuid);
+      addLightState(spotLight.uuid, spotLightHelper.uuid);
     }
   }, [spotLightRequired]);
 
