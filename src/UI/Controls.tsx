@@ -11,6 +11,9 @@ const Controls = () => {
   const getSelectedModel = useStore((state) => state.getSelectedModel);
   const selectedModel = useStore((state) => state.selectedModel);
   const selectedLight = useStore((state) => state.selectedLight);
+  const toggleSpotlightHelper = useStore(
+    (state) => state.toggleSpotlightHelper
+  );
   const getSelectedLight = useStore((state) => state.getSelectedLight);
   const getSelectedModelState = useStore(
     (state) => state.getSelectedModelState
@@ -137,6 +140,7 @@ const Controls = () => {
           // Get helper
           const lightState = getSelectedLightState(light.uuid);
           lightState!.helperVisible = value;
+          toggleSpotlightHelper();
         },
       },
       intensity: {

@@ -3,7 +3,8 @@ import { TransformControls } from "@react-three/drei";
 import { useEffect } from "react";
 import { TRANSFORM_NODES } from "../state/Config";
 import useStore from "../state/store";
-import { LineSegments } from "three";
+import { getSelectedMesh } from "../utils/Utils";
+import { Object3D } from "three";
 
 const ObjectSelection = () => {
   const setCheckState = useStore((state) => state.setCheckState);
@@ -34,22 +35,22 @@ const ObjectSelection = () => {
     const intersects = raycaster.intersectObjects(scene.children);
     if (intersects.length) {
       // DEBUG
-      console.log("Selected = ", intersects[0].object);
-      let found = false;
-      let currentObject = intersects[0].object;
+      console.log("Selected = ", intersects);
+      let currentObject = getSelectedMesh(intersects);
       // Do not pick helpers
-      if (currentObject instanceof LineSegments) {
+      if (!currentObject) {
         setCheckState(false);
         return;
       }
 
-      let selected = null;
+      let found = false;
+      let selected: Object3D | null = null;
       while (!found) {
-        if (currentObject.parent!.type === "Scene") {
-          selected = currentObject;
+        if (currentObject!.parent!.type === "Scene") {
+          selected = currentObject as Object3D;
           found = true;
         } else {
-          currentObject = currentObject.parent!;
+          currentObject = currentObject!.parent!;
         }
       }
       // Check that object not locked

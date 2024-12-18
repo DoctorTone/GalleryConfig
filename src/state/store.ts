@@ -1,6 +1,6 @@
 import { Object3D } from "three";
 import { create } from "zustand";
-import { SCENE } from "./Config";
+import { LIGHTS, SCENE } from "./Config";
 import { ModelState } from "./ModelState";
 import { LightState } from "./LightState";
 
@@ -32,6 +32,8 @@ interface FileState {
   lightStates: LightState[];
   addLightState: (uuid: string, helperID: string) => void;
   getSelectedLightState: (id: string) => LightState | undefined;
+  spotlightHelperRequired: boolean;
+  toggleSpotlightHelper: () => void;
   unlockAll: () => void;
 }
 
@@ -75,6 +77,11 @@ const useStore = create<FileState>((set, get) => ({
     })),
   getSelectedLightState: (id) =>
     get().lightStates.find((element) => element.uuid === id),
+  spotlightHelperRequired: LIGHTS.SHOW_HELPER,
+  toggleSpotlightHelper: () =>
+    set((state) => ({
+      spotlightHelperRequired: !state.spotlightHelperRequired,
+    })),
   unlockAll: () =>
     set((state) => ({
       modelStates: state.modelStates.map((element) => ({

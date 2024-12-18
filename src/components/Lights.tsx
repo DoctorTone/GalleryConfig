@@ -8,15 +8,22 @@ import {
 } from "three";
 import { useThree } from "@react-three/fiber";
 import useStore from "../state/store";
-import { SCENE } from "../state/Config";
+import { SCENE, LIGHTS } from "../state/Config";
 
 const Lights = () => {
   const intensity = useStore((state) => state.intensity);
   const spotLightRequired = useStore((state) => state.spotLightRequired);
+  const spotlightHelperRequired = useStore(
+    (state) => state.spotlightHelperRequired
+  );
   const createSpotLight = useStore((state) => state.createSpotLight);
   const numSpotLights = useStore((state) => state.numSpotLights);
   const addLightState = useStore((state) => state.addLightState);
   const addModelState = useStore((state) => state.addModelState);
+  const getSelectedLight = useStore((state) => state.getSelectedLight);
+  const getSelectedLightState = useStore(
+    (state) => state.getSelectedLightState
+  );
   const { scene } = useThree();
 
   useEffect(() => {
@@ -27,6 +34,7 @@ const Lights = () => {
       scene.add(spotLight);
       // Helper
       const spotLightHelper = new SpotLightHelper(spotLight);
+      spotLightHelper.visible = LIGHTS.SHOW_HELPER;
       scene.add(spotLightHelper);
       // Target
       const boxGeom = new BoxGeometry(
@@ -53,6 +61,20 @@ const Lights = () => {
       addLightState(spotLight.uuid, spotLightHelper.uuid);
     }
   }, [spotLightRequired]);
+
+  useEffect(() => {
+    const light = getSelectedLight();
+    if (!light) return;
+
+    const lightState = getSelectedLightState(light.uuid);
+    const helperID = lightState?.helperID;
+    if (!helperID) return;
+
+    const spotHelper = scene.getObjectByProperty("uuid", helperID);
+    if (spotHelper) {
+      spotHelper.visible = lightState.helperVisible;
+    }
+  }, [spotlightHelperRequired]);
 
   return (
     <>

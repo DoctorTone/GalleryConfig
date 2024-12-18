@@ -25,6 +25,7 @@ const LIGHTS = {
   ANGLE: Math.PI / 3,
   PENUMBRA: 0,
   DECAY: 2,
+  SHOW_HELPER: false,
 };
 
 export { SCENE, TRANSFORM_NODES, LIGHTS };
