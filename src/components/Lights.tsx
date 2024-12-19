@@ -16,6 +16,12 @@ const Lights = () => {
   const spotlightHelperRequired = useStore(
     (state) => state.spotlightHelperRequired
   );
+  const spotlightHelperUpdateRequired = useStore(
+    (state) => state.spotlightHelperUpdateRequired
+  );
+  const updateSpotlightHelper = useStore(
+    (state) => state.updateSpotlightHelper
+  );
   const createSpotLight = useStore((state) => state.createSpotLight);
   const numSpotLights = useStore((state) => state.numSpotLights);
   const addLightState = useStore((state) => state.addLightState);
@@ -42,6 +48,8 @@ const Lights = () => {
         SCENE.SPOTLIGHT_SIZE,
         SCENE.SPOTLIGHT_SIZE
       );
+      // DEBUG
+      console.log("Spotlight = ", spotLightHelper);
       const targetMat = new MeshStandardMaterial({ color: "blue" });
       const target = new Mesh(boxGeom, targetMat);
       target.name = `Spotlight_Target_${numSpotLights}`;
@@ -75,6 +83,26 @@ const Lights = () => {
       spotHelper.visible = lightState.helperVisible;
     }
   }, [spotlightHelperRequired]);
+
+  useEffect(() => {
+    if (spotlightHelperUpdateRequired) {
+      const light = getSelectedLight();
+      if (!light) return;
+
+      const lightState = getSelectedLightState(light.uuid);
+      const helperID = lightState?.helperID;
+      if (!helperID) return;
+
+      const spotHelper = scene.getObjectByProperty(
+        "uuid",
+        helperID
+      ) as SpotLightHelper;
+      if (spotHelper) {
+        spotHelper.update();
+      }
+      updateSpotlightHelper(false);
+    }
+  }, [spotlightHelperUpdateRequired]);
 
   return (
     <>

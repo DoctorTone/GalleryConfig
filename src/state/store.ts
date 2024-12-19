@@ -26,6 +26,8 @@ interface FileState {
   spotLightRequired: boolean;
   createSpotLight: (status: boolean) => void;
   numSpotLights: number;
+  spotlightHelperUpdateRequired: boolean;
+  updateSpotlightHelper: (status: boolean) => void;
   modelStates: ModelState[];
   addModelState: (uuid: string) => void;
   getSelectedModelState: (id: string) => ModelState | undefined;
@@ -63,6 +65,9 @@ const useStore = create<FileState>((set, get) => ({
       numSpotLights: status ? state.numSpotLights + 1 : state.numSpotLights,
     })),
   numSpotLights: 0,
+  spotlightHelperUpdateRequired: false,
+  updateSpotlightHelper: (status) =>
+    set(() => ({ spotlightHelperUpdateRequired: status })),
   modelStates: [],
   addModelState: (uuid) =>
     set((state) => ({

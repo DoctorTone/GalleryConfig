@@ -21,6 +21,9 @@ const Controls = () => {
   const getSelectedLightState = useStore(
     (state) => state.getSelectedLightState
   );
+  const updateSpotlightHelper = useStore(
+    (state) => state.updateSpotlightHelper
+  );
   const createSpotLight = useStore((state) => state.createSpotLight);
   const unlockAll = useStore((state) => state.unlockAll);
   const setExport = useStore((state) => state.setExport);
@@ -60,6 +63,8 @@ const Controls = () => {
       setLight({ angle: state?.angle });
       //@ts-ignore
       setLight({ penumbra: state?.penumbra });
+      //@ts-ignore
+      setLight({ helper: state?.helper });
     }
   }, [selectedModel, selectedLight]);
 
@@ -167,6 +172,8 @@ const Controls = () => {
 
           getSelectedLightState(light.uuid)!.distance = value;
           (light as SpotLight).distance = value;
+
+          updateSpotlightHelper(true);
         },
       },
       angle: {
@@ -180,6 +187,8 @@ const Controls = () => {
 
           getSelectedLightState(light.uuid)!.angle = value;
           (light as SpotLight).angle = value;
+
+          updateSpotlightHelper(true);
         },
       },
       penumbra: {
