@@ -64,7 +64,7 @@ const Controls = () => {
       //@ts-ignore
       setLight({ penumbra: state?.penumbra });
       //@ts-ignore
-      setLight({ helper: state?.helper });
+      setLight({ helper: state?.helperVisible });
     }
   }, [selectedModel, selectedLight]);
 
