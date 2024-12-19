@@ -4,13 +4,16 @@ import { useEffect } from "react";
 import { TRANSFORM_NODES } from "../state/Config";
 import useStore from "../state/store";
 import { getSelectedMesh } from "../utils/Utils";
-import { Object3D } from "three";
+import { Object3D, SpotLightHelper } from "three";
 
 const ObjectSelection = () => {
   const setCheckState = useStore((state) => state.setCheckState);
   const setSelectedModel = useStore((state) => state.setSelectedModel);
   const getSelectedModelState = useStore(
     (state) => state.getSelectedModelState
+  );
+  const getSelectedLightState = useStore(
+    (state) => state.getSelectedLightState
   );
   const setSelectedLight = useStore((state) => state.setSelectedLight);
   const selectedModel = useStore((state) => state.selectedModel);
@@ -25,6 +28,17 @@ const ObjectSelection = () => {
         if (selectedModel?.name.includes("Spotlight_Target")) return;
 
         selectedLight.position.copy(selectedModel!.position);
+        // Update helper
+        const helperID = getSelectedLightState(selectedLight.uuid)?.helperID;
+        if (!helperID) return;
+
+        const spotHelper = scene.getObjectByProperty(
+          "uuid",
+          helperID
+        ) as SpotLightHelper;
+        if (spotHelper) {
+          spotHelper.update();
+        }
       }
     }
   };
