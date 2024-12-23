@@ -50,7 +50,7 @@ const ObjectSelection = () => {
     if (intersects.length) {
       // DEBUG
       console.log("Selected = ", intersects);
-      let currentObject = getSelectedMesh(intersects);
+      let currentObject: Object3D | undefined = getSelectedMesh(intersects);
       // Do not pick helpers
       if (!currentObject) {
         setCheckState(false);
@@ -64,7 +64,7 @@ const ObjectSelection = () => {
           selected = currentObject as Object3D;
           found = true;
         } else {
-          currentObject = currentObject!.parent!;
+          currentObject = currentObject!.parent! as Object3D;
         }
       }
       // Check that object not locked
