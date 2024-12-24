@@ -4,8 +4,10 @@ import { toggleLights, toggleWireframe } from "../utils/Utils";
 import { useEffect } from "react";
 import { LIGHTS } from "../state/Config";
 import { Mesh, MeshStandardMaterial, SpotLight } from "three";
+import { useFilePicker } from "use-file-picker";
 
 const Controls = () => {
+  const { openFilePicker, filesContent } = useFilePicker({ accept: ".json" });
   const setIntensity = useStore((state) => state.setIntensity);
   const toggleDragDrop = useStore((state) => state.toggleDragDrop);
   const getSelectedModel = useStore((state) => state.getSelectedModel);
@@ -27,6 +29,7 @@ const Controls = () => {
   const createSpotLight = useStore((state) => state.createSpotLight);
   const unlockAll = useStore((state) => state.unlockAll);
   const setExport = useStore((state) => state.setExport);
+  const setSceneFile = useStore((state) => state.setSceneFile);
 
   const toggleDrop = () => {
     toggleDragDrop();
@@ -38,6 +41,10 @@ const Controls = () => {
 
   const exportScene = () => {
     setExport(true);
+  };
+
+  const loadScene = () => {
+    openFilePicker();
   };
 
   useEffect(() => {
@@ -68,10 +75,17 @@ const Controls = () => {
     }
   }, [selectedModel, selectedLight]);
 
+  useEffect(() => {
+    if (filesContent.length) {
+      console.log("File = ", filesContent[0]);
+    }
+  }, [filesContent]);
+
   useControls({
     dragDrop: button(toggleDrop),
     unlock: button(unlock),
     export: button(exportScene),
+    load: button(loadScene),
     ambient: {
       value: 0.5,
       min: 0,

@@ -9,6 +9,8 @@ interface FileState {
   setFile: (file: File | null) => void;
   exportRequired: boolean;
   setExport: (status: boolean) => void;
+  sceneFile: string;
+  setSceneFile: (filename: string) => void;
   intensity: number;
   setIntensity: (value: number) => void;
   dropVisible: boolean;
@@ -44,6 +46,8 @@ const useStore = create<FileState>((set, get) => ({
   setFile: (objFile) => set(() => ({ file: objFile })),
   exportRequired: false,
   setExport: (status) => set(() => ({ exportRequired: status })),
+  sceneFile: "",
+  setSceneFile: (filename) => set(() => ({ sceneFile: filename })),
   intensity: SCENE.ambientIntensity,
   setIntensity: (value) => set(() => ({ intensity: value })),
   dropVisible: true,
